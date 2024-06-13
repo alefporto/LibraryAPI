@@ -1,19 +1,7 @@
-// Forma nativa do node de criar um servidor local HTTTP simulando um servidor real.
-import http from 'http';
+import app from './src/app.js';
 
 const PORT = process.env.PORT ?? 3000;
 
-const rotas = {
-    "/": "Curso de Node.js",
-    "/livros": "Entrei na rota livros",
-    "/autores": "Entrei na rota autores"
-};
-
-const server = http.createServer((req, res) => {
-    res.writeHead(200, { "Content-Type": "text/plain"  });
-    res.end(rotas[req.url]);
-});
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Listening server on port ${PORT}...`);
 });
