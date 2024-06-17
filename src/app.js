@@ -1,36 +1,24 @@
 import express from 'express';
+import dbConnect from './config/dbConnect.js';
+import livro from './models/Livro.js';
+
+const connection = await dbConnect();
+
+connection.on("error", (err) => {
+    console.error(`Erro de conexão: ${err.message}`);
+});
+
+connection.once("open", () => {
+    console.log("Conexão estabelecida com sucesso.");
+});
 
 const app = express();
 
-// Middleware - utilizados pra ter acesso as requisições e fazer algumas ações nelas.
 app.use(express.json());
 
-// Mock de dados
-const livros = [
-    {
-        id: 1,
-        titulo: "O Hobbit"
-    },
-    {
-        id: 2,
-        titulo: "Pessoas normais"
-    },
-    {
-        id: 3,
-        titulo: "A Biblioteca da Meia Noite"
-    },
-    {
-        id: 4,
-        titulo: "O Alquimista"
-    }
-]
-
-function findIndexById(id){
-    return livros.findIndex(livro => livro.id === Number(id));
-}
-
-app.get('/livros', (req, res) => {
-    res.status(200).json(livros);
+app.get('/livros', async (req, res) => {
+    const listBooks = await livro.find({}); 
+    res.status(200).json(listBooks);
 });
 
 app.get('/livros/:id', (req, res) => {
