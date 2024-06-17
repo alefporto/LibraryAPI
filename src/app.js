@@ -1,6 +1,6 @@
 import express from 'express';
 import dbConnect from './config/dbConnect.js';
-import livro from './models/Livro.js';
+import book from './models/Book.js';
 
 const connection = await dbConnect();
 
@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/livros', async (req, res) => {
-    const listBooks = await livro.find({}); 
+    const listBooks = await book.find({}); 
     res.status(200).json(listBooks);
 });
 
