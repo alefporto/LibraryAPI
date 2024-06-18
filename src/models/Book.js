@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
+import { authorSchema } from './Author.js';
 
 const bookSchema = new mongoose.Schema({
     id: { type: mongoose.Schema.Types.ObjectId },
     title: { type: String, required: true },
+    author: authorSchema,
     pages: { type: Number }
 }, { versionKey: false });
 
