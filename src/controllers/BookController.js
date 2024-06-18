@@ -10,7 +10,7 @@ class BookController {
         }
     }
 
-    async index(req, res){ // static - serve pra não precisar instanciar um objecto pra usar o metodo
+    async index(req, res){
         try {
             const listBooks = await book.find(); 
             res.status(200).json(listBooks);
