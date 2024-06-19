@@ -1,8 +1,7 @@
 import express from 'express';
-import dbConnect from './config/dbConnect.js';
+import connection from './config/dbConnect.js';
 import routes from './routes/routesIndex.js'
 
-const connection = await dbConnect();
 connection.on("error", (err) => { console.error(`Erro de conexão: ${err.message}`); });
 connection.once("open", () => { console.log("Conexão estabelecida com sucesso."); });
 
