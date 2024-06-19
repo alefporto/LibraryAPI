@@ -3,10 +3,10 @@ import book from '../models/Book.js';
 
 class BookController {
     async store(req, res){
-        const bodyData = req.body; 
-        const completeBook = { ...bodyData };
-
         try {
+            const bodyData = req.body; 
+            const completeBook = { ...bodyData };
+
             if(bodyData.author)
                 completeBook.author = await author.findById(bodyData.author);
 
@@ -26,7 +26,17 @@ class BookController {
             res.status(500).json({ message: `Falha na requisição dos livros: ${err.message}.`});
         }
     }
-    
+  
+    async showByPublisher(req, res){
+        try {
+            const publisher = req.query.editora;
+            const booksByPublisher = await book.find({ publisher: publisher });
+            res.status(200).json(booksByPublisher);
+        } catch(err) {
+            res.status(500).json({ message: `Falha ao buscar: ${err.message}.` });
+        }
+    }
+
     async showById(req, res){
         try {
             const id = req.params.id;
@@ -38,7 +48,6 @@ class BookController {
     }
 
     async update(req, res){
-
         try {
             const bodyData = req.body;
             const bookUpdateData = { ...bodyData };
