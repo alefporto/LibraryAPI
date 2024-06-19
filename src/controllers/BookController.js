@@ -3,16 +3,16 @@ import book from '../models/Book.js';
 
 class BookController {
     async store(req, res){
-        const newBookRequest = req.body; 
-        
+        const bodyData = req.body; 
+        const completeBook = { ...bodyData };
+
         try {
-            const foundAuthor = await author.findById(newBookRequest.author);
+            if(bodyData.author)
+                completeBook.author = await author.findById(bodyData.author);
 
-            const completeBook = { ...newBookRequest, author: foundAuthor._doc };
-
-            const createdBook = await book.create(completeBook);
+            const newBook = await book.create(completeBook);
             
-            res.status(201).json({ message: "Livro cadastrado com sucesso.", book: createdBook });
+            res.status(201).json({ message: "Livro cadastrado com sucesso.", book: newBook });
         } catch(err) {
             res.status(500).json({ message: `Falha ao cadastrar livro: ${err.message}.` });
         }
@@ -38,14 +38,14 @@ class BookController {
     }
 
     async update(req, res){
-        const bodyData = req.body;
 
         try {
+            const bodyData = req.body;
+            const bookUpdateData = { ...bodyData };
             const id = req.params.id;
             
-            const foundAuthor = await author.findById(bodyData.author);
-            
-            const bookUpdateData = { ...bodyData, author: foundAuthor._doc };
+            if(bodyData.author)
+                bookUpdateData.author = await author.findById(bodyData.author);
 
             await book.findByIdAndUpdate(id, bookUpdateData);
 
