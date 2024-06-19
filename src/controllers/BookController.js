@@ -4,6 +4,7 @@ import book from '../models/Book.js';
 class BookController {
     async store(req, res){
         const newBookRequest = req.body; 
+        
         try {
             const foundAuthor = await author.findById(newBookRequest.author);
 
@@ -37,9 +38,17 @@ class BookController {
     }
 
     async update(req, res){
+        const bodyData = req.body;
+
         try {
             const id = req.params.id;
-            await book.findByIdAndUpdate(id, req.body);
+            
+            const foundAuthor = await author.findById(bodyData.author);
+            
+            const bookUpdateData = { ...bodyData, author: foundAuthor._doc };
+
+            await book.findByIdAndUpdate(id, bookUpdateData);
+
             res.status(200).json({ message: "Livro atualizado com sucesso." });
         } catch(err) {
             res.status(500).json({ message: `Falha ao atualizar livro: ${err.message}.` });
