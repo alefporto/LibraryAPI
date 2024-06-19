@@ -2,7 +2,7 @@ import { author } from '../models/Author.js';
 import book from '../models/Book.js';
 
 class BookController {
-    async store(req, res){
+    async store(req, res, next){
         try {
             const bodyData = req.body; 
             const completeBook = { ...bodyData };
@@ -14,40 +14,40 @@ class BookController {
             
             res.status(201).json({ message: "Livro cadastrado com sucesso.", book: newBook });
         } catch(err) {
-            res.status(500).json({ message: `Falha ao cadastrar livro: ${err.message}.` });
+            next(err);
         }
     }
 
-    async index(req, res){
+    async index(req, res, next){
         try {
             const listBooks = await book.find(); 
             res.status(200).json(listBooks);
         } catch(err) {
-            res.status(500).json({ message: `Falha na requisição dos livros: ${err.message}.`});
+            next(err);
         }
     }
   
-    async showByPublisher(req, res){
+    async showByPublisher(req, res, next){
         try {
             const publisher = req.query.editora;
             const booksByPublisher = await book.find({ publisher: publisher });
             res.status(200).json(booksByPublisher);
         } catch(err) {
-            res.status(500).json({ message: `Falha ao buscar: ${err.message}.` });
+            next(err);
         }
     }
 
-    async showById(req, res){
+    async showById(req, res, next){
         try {
             const id = req.params.id;
             const foundBook = await book.findById(id);
             res.status(200).json(foundBook);
         } catch(err) {
-            res.status(500).json({ message: `Falha na requisição do livro: ${err.message}.` });
+            next(err);
         }
     }
 
-    async update(req, res){
+    async update(req, res, next){
         try {
             const bodyData = req.body;
             const bookUpdateData = { ...bodyData };
@@ -60,17 +60,17 @@ class BookController {
 
             res.status(200).json({ message: "Livro atualizado com sucesso." });
         } catch(err) {
-            res.status(500).json({ message: `Falha ao atualizar livro: ${err.message}.` });
+            next(err);
         }
     }
 
-    async delete(req, res){
+    async delete(req, res, next){
         try {
             const id = req.params.id;
             await book.findByIdAndDelete(id);
             res.status(200).json({ message: "Livro deletado com sucesso." });
         } catch(err) {
-            res.status(500).json({ message: `Falha ao deletar livro: ${err.message}.` });
+            next(err);
         }
     }
 }
