@@ -12,8 +12,3 @@ app.use(routes);
 app.use(errorHandler);
 
 export default app;
-
-// if(err instanceof mongoose.Error.CastError)
-//     return res.status(400).json({ message: `Um ou mais dados fornecidos estão incorretos: ${err.message}.` });
-
-// return res.status(500).json({ message: `Erro interno no servidor: ${err.message}.` });
