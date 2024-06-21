@@ -4,14 +4,7 @@ import book from '../models/Book.js';
 class BookController {
     async store(req, res, next){
         try {
-            const bodyData = req.body; 
-            const completeBook = { ...bodyData };
-
-            if(bodyData.author)
-                completeBook.author = await author.findById(bodyData.author);
-
-            const newBook = await book.create(completeBook);
-            
+            const newBook = await book.create(req.body);
             res.status(201).json({ message: "Livro cadastrado com sucesso.", book: newBook });
         } catch(err) {
             next(err);
@@ -20,7 +13,8 @@ class BookController {
 
     async index(req, res, next){
         try {
-            const listBooks = await book.find(); 
+
+            const listBooks = await book.find({}).populate("author").exec(); 
             res.status(200).json(listBooks);
         } catch(err) {
             next(err);
