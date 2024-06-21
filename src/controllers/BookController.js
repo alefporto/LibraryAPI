@@ -1,4 +1,4 @@
-import { author } from '../models/Author.js';
+
 import book from '../models/Book.js';
 
 class BookController {
@@ -13,7 +13,6 @@ class BookController {
 
     async index(req, res, next){
         try {
-
             const listBooks = await book.find({}).populate("author").exec(); 
             res.status(200).json(listBooks);
         } catch(err) {
@@ -24,7 +23,7 @@ class BookController {
     async showByPublisher(req, res, next){
         try {
             const publisher = req.query.editora;
-            const booksByPublisher = await book.find({ publisher: publisher });
+            const booksByPublisher = await book.find({ publisher: publisher }).populate("author").exec();
             res.status(200).json(booksByPublisher);
         } catch(err) {
             next(err);
@@ -34,8 +33,12 @@ class BookController {
     async showById(req, res, next){
         try {
             const id = req.params.id;
-            const foundBook = await book.findById(id);
-            res.status(200).json(foundBook);
+            const foundBook = await book.findById(id).populate("author").exec();
+            
+            if(foundBook)
+                res.status(200).json(foundBook);
+            else
+                res.status(404).json({ message: "Não foi encontrado um livro com esse ID", status: 404 })
         } catch(err) {
             next(err);
         }
@@ -43,15 +46,8 @@ class BookController {
 
     async update(req, res, next){
         try {
-            const bodyData = req.body;
-            const bookUpdateData = { ...bodyData };
             const id = req.params.id;
-            
-            if(bodyData.author)
-                bookUpdateData.author = await author.findById(bodyData.author);
-
-            await book.findByIdAndUpdate(id, bookUpdateData);
-
+            await book.findByIdAndUpdate(id, req.body);
             res.status(200).json({ message: "Livro atualizado com sucesso." });
         } catch(err) {
             next(err);
