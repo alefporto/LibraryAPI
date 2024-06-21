@@ -1,4 +1,5 @@
-import { author } from '../models/Author.js';
+import author from '../models/Author.js';
+import NotFound from '../errors/NotFound.js';
 
 class AuthorController {
     async store(req, res, next){
@@ -23,11 +24,11 @@ class AuthorController {
         try {
             const id = req.params.id;
             const foundAuthor = await author.findById(id);
-
+            
             if(foundAuthor === null)
-                return res.status(404).json({ message: "ID do autor não localizado." });
-
-            return res.status(200).json(foundAuthor);
+                return next(new NotFound("Não foi encontrado(a) um(a) autor(a) com esse ID"));
+            
+            res.status(200).json(foundAuthor);
         } catch(err) {
             next(err);
         }
@@ -36,7 +37,11 @@ class AuthorController {
     async update(req, res, next){
         try {
             const id = req.params.id;
-            await author.findByIdAndUpdate(id, req.body);
+            const result = await author.findByIdAndUpdate(id, req.body);
+            
+            if(result === null)
+                return next(new NotFound("Não foi encontrado(a) um(a) autor(a) com esse ID"));
+
             res.status(200).json({ message: "Autor(a) atualizado(a) com sucesso." });
         } catch(err) {
             next(err);
@@ -46,7 +51,11 @@ class AuthorController {
     async delete(req, res, next){
         try {
             const id = req.params.id;
-            await author.findByIdAndDelete(id);
+            const result = await author.findByIdAndDelete(id);
+            
+            if(result === null)
+                return next(new NotFound("Não foi encontrado(a) um(a) autor(a) com esse ID"));
+
             res.status(200).json({ message: "Autor(a) deletado(a) com sucesso." });
         } catch(err) {
             next(err);
