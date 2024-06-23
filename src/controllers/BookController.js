@@ -20,15 +20,15 @@ class BookController {
         }
     }
   
-    async showByPublisher(req, res, next){
+    async showByFilter(req, res, next){
         try {
-            const publisher = req.query.editora;
-            const booksByPublisher = await book.find({ publisher: publisher }).populate("author").exec();
+            const query = processQuery(req.query);
 
-            if(booksByPublisher.length == 0)
-                return res.status(404).json({ message: "Não foi encontrada uma editora com esse nome", status: 404 });
+            const queryResult = await book.find(query).populate("author").exec();
 
-            res.status(200).json(booksByPublisher);
+            if(queryResult.length == 0) return next(new NotFound("Sua pesquisa não encontrou nenhum livro correspondente"))
+
+            res.status(200).json(queryResult);
         } catch(err) {
             next(err);
         }
@@ -75,6 +75,21 @@ class BookController {
             next(err);
         }
     }
+}
+
+function processQuery(paramsQuery){
+    const { title, publisher, minPages, maxPages } = paramsQuery;
+
+    const query = {};
+
+    if(publisher) query.publisher = { $regex: publisher, $options: "i" };
+    if(title) query.title = { $regex: title, $options: "i" };
+
+    if(minPages || maxPages) query.pages = {};
+    if(minPages) query.pages.$gte = minPages;
+    if(maxPages) query.pages.$lte = maxPages;
+
+    return query;
 }
 
 export default new BookController();

@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/livros', BookController.store);
 router.get('/livros', BookController.index);
-router.get('/livros/busca', BookController.showByPublisher);
+router.get('/livros/busca', BookController.showByFilter);
 router.get('/livros/:id', BookController.showById);
 router.put('/livros/:id', BookController.update);
 router.delete('/livros/:id', BookController.delete);
