@@ -1,4 +1,4 @@
-import { book } from '../models/modelsIndex.js';
+import { author, book } from '../models/modelsIndex.js';
 import NotFound from '../errors/NotFound.js';
 
 class BookController {
@@ -22,11 +22,9 @@ class BookController {
   
     async showByFilter(req, res, next){
         try {
-            const query = processQuery(req.query);
+            const query = await processQuery(req.query);
 
             const queryResult = await book.find(query).populate("author").exec();
-
-            if(queryResult.length == 0) return next(new NotFound("Sua pesquisa não encontrou nenhum livro correspondente"))
 
             res.status(200).json(queryResult);
         } catch(err) {
@@ -77,17 +75,29 @@ class BookController {
     }
 }
 
-function processQuery(paramsQuery){
-    const { title, publisher, minPages, maxPages } = paramsQuery;
+async function processQuery(paramsQuery){
+    const { title, publisher, authorName, minPages, maxPages } = paramsQuery;
 
     const query = {};
+
 
     if(publisher) query.publisher = { $regex: publisher, $options: "i" };
     if(title) query.title = { $regex: title, $options: "i" };
 
-    if(minPages || maxPages) query.pages = {};
-    if(minPages) query.pages.$gte = minPages;
-    if(maxPages) query.pages.$lte = maxPages;
+    if(authorName){
+        const correspondingAuthor = await author.findOne({ name: { $regex: authorName, $options: "i" } });
+
+        if(correspondingAuthor === null)
+            query.author = null;
+        else
+            query.author = correspondingAuthor._id;
+    }
+
+    if(minPages || maxPages){
+        query.pages = {};
+        if(minPages) query.pages.$gte = minPages;
+        if(maxPages) query.pages.$lte = maxPages;
+    }
 
     return query;
 }
