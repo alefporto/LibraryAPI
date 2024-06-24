@@ -14,10 +14,6 @@ const bookSchema = new mongoose.Schema({
     publisher: {
         type: String,
         required: [true, "O campo editora é obrigatório"],
-        enum: {
-            values: [ "Companhia das Letras", "HarperCollins" ],
-            message: "A editora {VALUE} não é um valor permitido"
-        }
     },
     pages: {
         type: Number,

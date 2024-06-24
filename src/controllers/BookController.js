@@ -1,5 +1,6 @@
 import { author, book } from '../models/modelsIndex.js';
 import NotFound from '../errors/NotFound.js';
+import IncorrectRequest from '../errors/IncorrectRequest.js';
 
 class BookController {
     async store(req, res, next){
@@ -13,8 +14,24 @@ class BookController {
 
     async index(req, res, next){
         try {
-            const listBooks = await book.find({}).populate("author").exec(); 
-            return res.status(200).json(listBooks);
+            let { limit = 5, page = 1 } = req.query;
+
+            limit = parseInt(limit);
+            page = parseInt(page);
+
+            if(limit > 0 && page > 0){
+                const listBooks = await book.find({})
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .populate("author")
+                .exec(); 
+                
+                return res.status(200).json(listBooks);
+            } else {
+                next(new IncorrectRequest())
+            }
+
+
         } catch(err) {
             next(err);
         }
