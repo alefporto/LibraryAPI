@@ -13,8 +13,11 @@ class AuthorController {
 
     async index(req, res, next){
         try {
-            const listAuthors = await author.find(); 
-            res.status(200).json(listAuthors);
+            const listAuthors = author.find();
+
+            req.result = listAuthors;
+
+            next();
         } catch(err) {
             next(err);
         }

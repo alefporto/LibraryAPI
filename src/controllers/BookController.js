@@ -1,6 +1,5 @@
 import { author, book } from '../models/modelsIndex.js';
 import NotFound from '../errors/NotFound.js';
-import IncorrectRequest from '../errors/IncorrectRequest.js';
 
 class BookController {
     async store(req, res, next){
@@ -14,24 +13,11 @@ class BookController {
 
     async index(req, res, next){
         try {
-            let { limit = 5, page = 1 } = req.query;
+            const queryBooks = book.find();
+            
+            req.result = queryBooks;
 
-            limit = parseInt(limit);
-            page = parseInt(page);
-
-            if(limit > 0 && page > 0){
-                const listBooks = await book.find({})
-                .skip((page - 1) * limit)
-                .limit(limit)
-                .populate("author")
-                .exec(); 
-                
-                return res.status(200).json(listBooks);
-            } else {
-                next(new IncorrectRequest())
-            }
-
-
+            next();
         } catch(err) {
             next(err);
         }
@@ -41,9 +27,11 @@ class BookController {
         try {
             const query = await processQuery(req.query);
 
-            const queryResult = await book.find(query).populate("author").exec();
+            const queryResult = book.find(query);
 
-            res.status(200).json(queryResult);
+            req.result = queryResult;
+
+            next();
         } catch(err) {
             next(err);
         }
@@ -52,7 +40,7 @@ class BookController {
     async showById(req, res, next){
         try {
             const id = req.params.id;
-            const foundBook = await book.findById(id).populate("author").exec();
+            const foundBook = await book.findById(id, {}, { autopopulate: false }).populate("author");
             
             if(foundBook === null)
                 return next(new NotFound("Não foi encontrado um livro com esse ID"));
@@ -97,7 +85,6 @@ async function processQuery(paramsQuery){
 
     const query = {};
 
-
     if(publisher) query.publisher = { $regex: publisher, $options: "i" };
     if(title) query.title = { $regex: title, $options: "i" };
 
@@ -120,4 +107,3 @@ async function processQuery(paramsQuery){
 }
 
 export default new BookController();
- 

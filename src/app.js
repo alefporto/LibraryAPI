@@ -1,5 +1,5 @@
 import express from 'express';
-import Handler404 from './middlewares/Handler404.js';
+import handler404 from './middlewares/handler404.js';
 import errorHandler from './middlewares/errorHandler.js'
 import connection from './database/dbConnect.js';
 import routes from './routes/routesIndex.js';
@@ -10,7 +10,7 @@ connection.once("open", () => { console.log("Conexão com o banco de dados estab
 const app = express();
 app.use(express.json());
 app.use(routes);
-app.use(Handler404);
+app.use(handler404);
 app.use(errorHandler);
 
 export default app;
