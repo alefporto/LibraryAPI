@@ -46,23 +46,12 @@
   <summary>Índice</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Sobre o projeto</a>
+      <a href="#sobre-o-projeto">Sobre o projeto</a>
       <ul>
-        <li><a href="#built-with">Desenvolvido com</a></li>
+        <li><a href="#desenvolvido-com">Desenvolvido com</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#contato">Contato</a></li>
   </ol>
 </details>
 
@@ -73,7 +62,7 @@ Esse é um projeto de estudos que inicialmente foi feito com base nos cursos "No
 
 Com o passar do tempo, fui aprendendo e estudando sobre mais conceitos e vi que poderiam ser aplicados também aqui nesse projeto, então desde então venho sempre incrementando cada vez mais essa LibraryAPI, tentando deixa-la mais próxima da excelência que almejo em todos meus projetos.
 
-<p align="right">(<a href="#readme-top">voltar pra cima</a>)</p>
+<p align="right">(<a id="sobre-o-projeto" href="#readme-top">voltar pra cima</a>)</p>
 
 
 
@@ -89,7 +78,7 @@ Esse projeto foi desenvolvido usando principalmente as seguintes linguagens, fra
 * [![Dotenv][Dotenv]][Dotenv-url]
 * [![Eslint][Eslint]][Eslint-url]
 
-<p align="right">(<a href="#readme-top">voltar pra cima</a>)</p>
+<p align="right">(<a id="desenvolvido-com" href="#readme-top" >voltar pra cima</a>)</p>
 
 <!-- Contato -->
 ## Contato
@@ -98,7 +87,7 @@ Alef Porto - falejoaoalef@gmail.com
 
 Link do projeto: [https://github.com/alefporto/LibraryAPI](https://github.com/alefporto/LibraryAPI)
 
-<p align="right">(<a href="#readme-top">voltar pra cima</a>)</p>
+<p align="right">(<a id="contato" href="#readme-top">voltar pra cima</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGENS -->
 [contributors-shield]: https://img.shields.io/github/contributors/alefporto/LibraryAPI?style=for-the-badge
