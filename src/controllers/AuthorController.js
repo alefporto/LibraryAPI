@@ -13,9 +13,9 @@ class AuthorController {
 
     async index(req, res, next){
         try {
-            const listAuthors = author.find();
+            const queryAuthors = author.find();
 
-            req.result = listAuthors;
+            req.result = queryAuthors;
 
             next();
         } catch(err) {

@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
 
-const authorSchema = new mongoose.Schema({
+const publisherSchema = new mongoose.Schema({
     id: { type: mongoose.Schema.Types.ObjectId },
     name: {
         type: String,
         required: [true, "O campo nome é obrigatório"]
     },
-    nationality: {
+    country: {
         type: String,
-        required: [true, "O campo nacionalidade é obrigatório"]
+        required: [true, "O campo país é obrigatório"]
     }
 }, { versionKey: false });
 
-const author = mongoose.model('authors', authorSchema);
+const publisher = mongoose.model('publishers', publisherSchema);
 
-export default author;
+export default publisher;

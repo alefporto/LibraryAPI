@@ -11,18 +11,21 @@ const bookSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "authors",
         required: [true, "O campo autor é obrigatório"],
-        autopopulate: { select: "name" }
+        autopopulate: { select: 'name' }
     },
     publisher: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "publishers",
         required: [true, "O campo editora é obrigatório"],
+        autopopulate: { select: 'name' }
     },
     edition: {
         type: String,
-        requeired: [true, "O campo edição é obrigatório"]
+        required: [true, "O campo edição é obrigatório"]
     },
     pages: {
         type: Number,
+        required: [true, "O campo páginas é obrigatório"],
         min: [10, "O valor {VALUE} é menor que o número mínimo permitido de páginas"],
         max: [5000, "O valor {VALUE} é maior que o número máximo permitido de páginas"]
     },
@@ -38,6 +41,6 @@ const bookSchema = new mongoose.Schema({
 
 bookSchema.plugin(autopopulate);
 
-const book = mongoose.model("books", bookSchema);
+const book = mongoose.model('books', bookSchema);
 
 export default book;
