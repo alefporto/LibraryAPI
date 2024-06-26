@@ -16,6 +16,7 @@ class BookController {
             const queryBooks = book.find();
             
             req.result = queryBooks;
+            req.type = "book";
 
             next();
         } catch(err) {
@@ -30,6 +31,7 @@ class BookController {
             const queryResult = book.find(query);
 
             req.result = queryResult;
+            req.type = "book";
 
             next();
         } catch(err) {

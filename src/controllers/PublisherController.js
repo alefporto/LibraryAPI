@@ -16,6 +16,7 @@ class PublisherController {
             const queryPublishers = publisher.find();
 
             req.result = queryPublishers;
+            req.type = "publisher";
 
             next();
         } catch (err) {

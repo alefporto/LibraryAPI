@@ -16,6 +16,7 @@ class AuthorController {
             const queryAuthors = author.find();
 
             req.result = queryAuthors;
+            req.type = "author";
 
             next();
         } catch(err) {
