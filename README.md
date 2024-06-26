@@ -3,7 +3,17 @@
 <!---------------------------------- SHIELDS ------------------------------>
 <!-- No final do documento está a declaração das variáveis de referência -->
 
-[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![LinkedIn][linkedin-shield]][linkedin-url]
+<div align="center">
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
+</div>
+
+
 
 <!--[![MIT License][license-shield]][license-url]-->
 ---
