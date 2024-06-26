@@ -1,5 +1,6 @@
 import { publisher } from '../models/modelsIndex.js';
 import NotFound from '../errors/NotFound.js';
+import publisherQueryBuilder from '../utils/publisherQueryBuilder.js';
 
 class PublisherController {
     async store(req, res, next){
@@ -22,6 +23,21 @@ class PublisherController {
         } catch (err) {
             next(err)
         }
+    }
+
+    async showByFilter(req, res, next){
+        try {
+            const query = await publisherQueryBuilder(req.query);
+            const queryResult = publisher.find(query);
+
+            req.result = queryResult;
+            req.type = "publisher";
+
+            next();
+        } catch(err) {
+            next(err);
+        }
+
     }
 
     async showById(req, res, next){

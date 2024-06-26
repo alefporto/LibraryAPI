@@ -1,5 +1,6 @@
-import { author, book } from '../models/modelsIndex.js';
+import { book } from '../models/modelsIndex.js';
 import NotFound from '../errors/NotFound.js';
+import bookQueryBuilder from '../utils/bookQueryBuilder.js';
 
 class BookController {
     async store(req, res, next){
@@ -26,7 +27,7 @@ class BookController {
   
     async showByFilter(req, res, next){
         try {
-            const query = await processQuery(req.query);
+            const query = await bookQueryBuilder(req.query);
 
             const queryResult = book.find(query);
 
@@ -82,32 +83,6 @@ class BookController {
             next(err);
         }
     }
-}
-
-async function processQuery(paramsQuery){
-    const { title, publisher, authorName, minPages, maxPages } = paramsQuery;
-
-    const query = {};
-
-    if(publisher) query.publisher = { $regex: publisher, $options: "i" };
-    if(title) query.title = { $regex: title, $options: "i" };
-
-    if(authorName){
-        const correspondingAuthor = await author.findOne({ name: { $regex: authorName, $options: "i" } });
-
-        if(correspondingAuthor === null)
-            query.author = null;
-        else
-            query.author = correspondingAuthor._id;
-    }
-
-    if(minPages || maxPages){
-        query.pages = {};
-        if(minPages) query.pages.$gte = minPages;
-        if(maxPages) query.pages.$lte = maxPages;
-    }
-
-    return query;
 }
 
 export default new BookController();

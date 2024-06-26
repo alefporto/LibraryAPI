@@ -6,6 +6,7 @@ const router = Router();
 
 router.post('/autores', AuthorController.store);
 router.get('/autores', AuthorController.index, paginator);
+router.get('/autores/busca', AuthorController.showByFilter, paginator);
 router.get('/autores/:id', AuthorController.showById);
 router.put('/autores/:id', AuthorController.update);
 router.delete('/autores/:id', AuthorController.delete);

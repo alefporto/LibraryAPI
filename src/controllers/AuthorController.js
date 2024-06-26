@@ -1,5 +1,6 @@
 import { author } from '../models/modelsIndex.js';
 import NotFound from '../errors/NotFound.js';
+import authorQueryBuilder from '../utils/authorQueryBuilder.js';
 
 class AuthorController {
     async store(req, res, next){
@@ -24,6 +25,22 @@ class AuthorController {
         }
     }
     
+    async showByFilter(req, res, next){
+        try {
+            const query = await authorQueryBuilder(req.query);
+
+            const queryResult = author.find(query);
+
+            req.result = queryResult;
+            req.type = "author";
+
+            next();
+
+        } catch(err) {
+            next(err);
+        }
+    }
+
     async showById(req, res, next){
         try {
             const id = req.params.id;
