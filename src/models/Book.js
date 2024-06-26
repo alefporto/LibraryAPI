@@ -17,10 +17,22 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: [true, "O campo editora é obrigatório"],
     },
+    edition: {
+        type: String,
+        requeired: [true, "O campo edição é obrigatório"]
+    },
     pages: {
         type: Number,
         min: [10, "O valor {VALUE} é menor que o número mínimo permitido de páginas"],
         max: [5000, "O valor {VALUE} é maior que o número máximo permitido de páginas"]
+    },
+    typeCover: {
+        type: String,
+        required: [true, "O campo tipo da capa é obrigatório"],
+        enum: {
+            values: [ "Capa comum", "Capa dura" ],
+            message: "O tipo de capa {VALUE} não é válido. Valores válidos: Capa comum; Capa dura"
+        }
     }
 }, { versionKey: false });
 

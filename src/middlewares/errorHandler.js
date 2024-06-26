@@ -11,7 +11,7 @@ function errorHandler(err, req, res, next){
         return new ValidationError(err).sendResponse(res);
     else if(err instanceof BaseError)
         return err.sendResponse(res);
-    console.log(err);
+
     return new BaseError().sendResponse(res);
 };
 
