@@ -5,7 +5,7 @@ class AuthorController {
     async store(req, res, next){
         try {
             const newAuthor = await author.create(req.body);
-            res.status(201).json({ message: "Autor(a) cadastrado(a) com sucesso.", author: newAuthor });
+            res.status(201).json({ message: "Autor(a) cadastrado(a) com sucesso", author: newAuthor });
         } catch(err) {
             next(err);
         }
@@ -45,7 +45,7 @@ class AuthorController {
             if(result === null)
                 return next(new NotFound("Não foi encontrado(a) um(a) autor(a) com esse ID"));
 
-            res.status(200).json({ message: "Autor(a) atualizado(a) com sucesso." });
+            res.status(200).json({ message: "Autor(a) atualizado(a) com sucesso" });
         } catch(err) {
             next(err);
         }

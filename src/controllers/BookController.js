@@ -40,7 +40,9 @@ class BookController {
     async showById(req, res, next){
         try {
             const id = req.params.id;
-            const foundBook = await book.findById(id, {}, { autopopulate: false }).populate("author");
+            const foundBook = await book.findById(id, {}, { autopopulate: false })
+                .populate("author")
+                .populate("publisher");
             
             if(foundBook === null)
                 return next(new NotFound("Não foi encontrado um livro com esse ID"));
