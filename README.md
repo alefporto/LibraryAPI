@@ -58,7 +58,9 @@
 <!-- Sobre o projeto -->
 ## Sobre o projeto
 
-Esse é um projeto de estudos que inicialmente foi feito com base nos cursos "Node.js: criando uma API Rest com Express e MongoDB" e "Node.js: lidando com buscas, filtros, paginação e erros em uma API" da plataforma de cursos Alura. 
+Esse é um projeto de estudos que inicialmente foi feito com base nos cursos "Node.js: criando uma API Rest com Express e MongoDB" e "Node.js: lidando com buscas, filtros, paginação e erros em uma API" da plataforma de cursos Alura.
+
+Durante esse projeto, tive a oportunidade de práticar e aplicar meus conhecimentos sobre conceitos como: CRUD, rotas, persistência de dados, MVC, tratamento de erros, validação de dados, buscas e filtros de forma dinâmica, paginação e ordenação. Então pra mim esse projeto foi um divisor de águas na minha carreira.
 
 Com o passar do tempo, fui aprendendo e estudando sobre mais conceitos e vi que poderiam ser aplicados também aqui nesse projeto, então desde então venho sempre incrementando cada vez mais essa LibraryAPI, tentando deixa-la mais próxima da excelência que almejo em todos meus projetos.
 
@@ -68,7 +70,7 @@ Com o passar do tempo, fui aprendendo e estudando sobre mais conceitos e vi que 
 
 ### Desenvolvido com
 
-Esse projeto foi desenvolvido usando principalmente as seguintes linguagens, frameworks e bibliotecas:
+Esse projeto foi desenvolvido usando principalmente as s'eguintes linguagens, frameworks e bibliotecas:
 
 * [![JavaScript][JavaScript]][JavaScript-url]
 * [![Node][Node.js]][Node-url]
